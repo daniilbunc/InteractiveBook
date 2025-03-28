@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документация: Интерактивный учебник</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6C5CE7;
+            --primary-dark: #5649C0;
+            --secondary: #A29BFE;
+            --accent: #00CEC9;
+            --light: #F8F9FA;
+            --dark: #2D3436;
+            --gray: #636E72;
+            --success: #00B894;
+            --danger: #D63031;
+            --warning: #FDCB6E;
+            --education: #6C5CE7;
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --neumorph-shadow-1: 8px 8px 16px rgba(0, 0, 0, 0.1), -8px -8px 16px rgba(255, 255, 255, 0.8);
+            --neumorph-shadow-2: 4px 4px 8px rgba(0, 0, 0, 0.1), -4px -4px 8px rgba(255, 255, 255, 0.8);
+            --neumorph-shadow-inset: inset 3px 3px 6px rgba(0, 0, 0, 0.1), inset -3px -3px 6px rgba(255, 255, 255, 0.8);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F6FA;
+            color: var(--dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 100px 0 120px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            margin-bottom: -50px;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, var(--accent), var(--success));
+        }
+        
+        header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(to right, #fff, #E8F4F8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+        
+        header p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            font-weight: 300;
+        }
+        
+        /* Floating elements */
+        .floating {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--glass);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border);
+            z-index: 0;
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        .floating:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: 10%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+        
+        .floating:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            top: 60%;
+            left: 30%;
+            animation-delay: 4s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        /* Main content */
+        .main-content {
+            padding: 60px 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Section cards */
+        .section-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--neumorph-shadow-1);
+            margin-bottom: 50px;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            border: none;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-card:hover {
+            transform: translateY(-10px) scale(1.005);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2));
+            transform: skewX(-30deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { right: -100px; }
+            50% { right: 150%; }
+            100% { right: -100px; }
+        }
+        
+        .section-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-body {
+            padding: 40px;
+        }
+        
+        /* Lab works grid */
+        .lab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .lab-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--neumorph-shadow-2);
+            border-left: 5px solid var(--primary);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lab-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), transparent);
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .lab-card:hover::before {
+            opacity: 1;
+        }
+        
+        .lab-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .lab-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .lab-description {
+            color: var(--gray);
+            margin-bottom: 25px;
+            flex-grow: 1;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+            border: none;
+            overflow: hidden;
+        }
+        
+        .download-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
+        }
+        
+        .download-btn:hover::after {
+            opacity: 1;
+        }
+        
+        .download-btn i {
+            font-size: 1.1rem;
+        }
+        
+        .download-btn span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Role cards */
+        .roles-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .role-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--neumorph-shadow-2);
+            border-top: 5px solid var(--accent);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .role-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 206, 201, 0.05), transparent);
+            z-index: 0;
+        }
+        
+        .role-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .role-card.teacher {
+            border-top-color: var(--primary);
+        }
+        
+        .role-card.student {
+            border-top-color: var(--success);
+        }
+        
+        .role-card.admin {
+            border-top-color: var(--danger);
+        }
+        
+        .role-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .role-title i {
+            margin-right: 15px;
+            font-size: 1.8rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.05);
+            border-radius: 12px;
+        }
+        
+        .role-card ul {
+            list-style-type: none;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .role-card li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .role-card li:hover {
+            transform: translateX(5px);
+        }
+        
+        .role-card li::before {
+            content: '›';
+            color: var(--primary);
+            margin-right: 15px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .role-card li:hover::before {
+            transform: translateX(5px);
+            color: var(--accent);
+        }
+        
+        /* Images */
+        .image-container {
+            margin: 35px 0;
+            text-align: center;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+        }
+        
+        .image-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .image-container:hover img {
+            transform: scale(1.03);
+        }
+        
+        .image-caption {
+            margin-top: 15px;
+            font-style: italic;
+            color: var(--gray);
+            font-size: 0.95rem;
+            padding: 0 20px;
+        }
+        
+        /* Lists */
+        ul {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+        
+        ul li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 50%;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        
+        ul li:hover::before {
+            transform: scale(1);
+            background: var(--accent);
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark), #1A1A1A);
+            color: white;
+            text-align: center;
+            padding: 50px 0;
+            margin-top: 80px;
+            clip-path: polygon(0 20%, 100% 0, 100% 100%, 0% 100%);
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        }
+        
+        footer p {
+            opacity: 0.8;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+        
+        footer p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Floating action button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.4);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .fab:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 30px rgba(108, 92, 231, 0.5);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            header h1 {
+                font-size: 3rem;
+            }
+            
+            .section-body {
+                padding: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 80px 0 100px;
+                clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
+                margin-bottom: -30px;
+            }
+            
+            header h1 {
+                font-size: 2.5rem;
+            }
+            
+            header p {
+                font-size: 1.1rem;
+            }
+            
+            .roles-container, .lab-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-header h2 {
+                font-size: 1.6rem;
+            }
+            
+            footer {
+                clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 100%);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-body {
+                padding: 25px;
+            }
+            
+            .lab-card, .role-card {
+                padding: 25px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-card {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .section-card:nth-child(1) { animation-delay: 0.1s; }
+        .section-card:nth-child(2) { animation-delay: 0.2s; }
+        .section-card:nth-child(3) { animation-delay: 0.3s; }
+        .section-card:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="floating"></div>
+        <div class="floating"></div>
+        <div class="floating"></div>
+        <div class="container">
+            <h1>Интерактивный учебник</h1>
+            <p>Полная документация и лабораторные работы</p>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="container">
+            <!-- Лабораторные работы -->
+            <section class="section-card">
+                <div class="section-header">
+                    <h2>Лабораторные работы</h2>
+                </div>
+                <div class="section-body">
+                    <p>Доступные для скачивания лабораторные работы по курсу:</p>
+                    
+                    <div class="lab-grid">
+                        <div class="lab-card">
+                            <h3 class="lab-title">Лабораторная работа 1</h3>
+                           
+                            <a href="labs/1.docx" class="download-btn">
+                                <i class="fas fa-download"></i>
+                                <span>Скачать</span>
+                            </a>
+                        </div>
+                        
+                        <div class="lab-card">
+                            <h3 class="lab-title">Лабораторная работа 2</h3>
+                            
+                            <a href="labs/2.docx" class="download-btn">
+                                <i class="fas fa-download"></i>
+                                <span>Скачать</span>
+                            </a>
+                        </div>
+                        
+                        <div class="lab-card">
+                            <h3 class="lab-title">Лабораторная работа 3</h3>
+                          
+                            <a href="labs/3.docx" class="download-btn">
+                                <i class="fas fa-download"></i>
+                                <span>Скачать</span>
+                            </a>
+                        </div>
+                        
+                        <div class="lab-card">
+                            <h3 class="lab-title">Лабораторная работа 4</h3>
+                            
+                            <a href="labs/4.docx" class="download-btn">
+                                <i class="fas fa-download"></i>
+                                <span>Скачать</span>
+                            </a>
+                        </div>
+                        
+                        <div class="lab-card">
+                            <h3 class="lab-title">Лабораторная работа 5</h3>
+                           
+                            <a href="labs/1.docx" class="download-btn">
+                                <i class="fas fa-download"></i>
+                                <span>Скачать</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Обзор системы -->
+            <section class="section-card">
+                <div class="section-header">
+                    <h2>1. Обзор системы</h2>
+                </div>
+                <div class="section-body">
+                    <p>Интерактивный учебник — это современная образовательная платформа, объединяющая учебные материалы, систему тестирования и отслеживания прогресса.</p>
+                    
+                    <div class="image-container">
+                        <img src="https://i.dailymail.co.uk/i/pix/2012/02/08/article-2098146-0F88B7F200000578-346_1024x615_large.jpg" alt="Архитектура системы">
+                        <div class="image-caption">Рисунок 1. Общая архитектура учебной платформы</div>
+                    </div>
+                    
+                    <h3>Ключевые компоненты:</h3>
+                    <ul>
+                        <li><strong>Управление курсами</strong> - создание и структурирование учебных материалов</li>
+                        <li><strong>Система тестирования</strong> - автоматическая проверка знаний</li>
+                        <li><strong>Аналитика успеваемости</strong> - отслеживание прогресса студентов</li>
+                        <li><strong>Интерактивные элементы</strong> - геймификация обучения</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Пользовательские роли -->
+            <section class="section-card">
+                <div class="section-header">
+                    <h2>2. Роли пользователей</h2>
+                </div>
+                <div class="section-body">
+                    <p>Система реализует три основные роли с различными уровнями доступа:</p>
+                    
+                    <div class="roles-container">
+                        <div class="role-card admin">
+                            <div class="role-title">
+                                <i class="fas fa-crown"></i> Администратор
+                            </div>
+                            <ul>
+                                <li>Управление всей платформой</li>
+                                <li>Настройка системных параметров</li>
+                                <li>Управление пользователями</li>
+                                <li>Доступ к технической статистике</li>
+                                <li>Резервное копирование данных</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="role-card teacher">
+                            <div class="role-title">
+                                <i class="fas fa-chalkboard-teacher"></i> Преподаватель
+                            </div>
+                            <ul>
+                                <li>Создание и редактирование курсов</li>
+                                <li>Разработка учебных материалов</li>
+                                <li>Проверка заданий</li>
+                                <li>Мониторинг успеваемости</li>
+                                <li>Консультирование студентов</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="role-card student">
+                            <div class="role-title">
+                                <i class="fas fa-user-graduate"></i> Студент
+                            </div>
+                            <ul>
+                                <li>Просмотр учебных материалов</li>
+                                <li>Выполнение заданий и тестов</li>
+                                <li>Отслеживание личного прогресса</li>
+                                <li>Участие в обсуждениях</li>
+                                <li>Получение рекомендаций</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Технические требования -->
+            <section class="section-card">
+                <div class="section-header">
+                    <h2>3. Технические требования</h2>
+                </div>
+                <div class="section-body">
+                    <h3>Серверные требования:</h3>
+                    <ul>
+                        <li>Python 3.8+ или Node.js 14+</li>
+                        <li>База данных: PostgreSQL 12+ или MongoDB 4.4+</li>
+                        <li>Минимум 2GB RAM</li>
+                        <li>10GB свободного места на диске</li>
+                    </ul>
+                    
+                    <h3>Клиентские требования:</h3>
+                    <ul>
+                        <li>Современный браузер (Chrome 90+, Firefox 85+, Edge 90+)</li>
+                        <li>Подключение к интернету (минимум 1Мбит/с)</li>
+                        <li>Разрешение экрана не менее 1024×768</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Интерактивный учебник. Все права защищены.</p>
+            <p>Версия документации 1.0</p>
+        </div>
+    </footer>
+    
+    <button class="fab" title="Наверх">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <script>
+        // Smooth scroll for FAB
+        document.querySelector('.fab').addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Show/hide FAB based on scroll position
+        window.addEventListener('scroll', () => {
+            const fab = document.querySelector('.fab');
+            if (window.scrollY > 300) {
+                fab.style.opacity = '1';
+                fab.style.visibility = 'visible';
+                fab.style.transform = 'translateY(0)';
+            } else {
+                fab.style.opacity = '0';
+                fab.style.visibility = 'hidden';
+                fab.style.transform = 'translateY(20px)';
+            }
+        });
+    </script>
+</body>
+</html>
