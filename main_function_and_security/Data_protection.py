@@ -1,5 +1,5 @@
 class UserManager:
-    def register(self, email: str, password: str, social_auth: dict = None) -> bool:
+    def registerr(self, email: str, password: str, social_auth: dict = None) -> bool:
         """Регистрация через почту или соцсети."""
         pass
 
