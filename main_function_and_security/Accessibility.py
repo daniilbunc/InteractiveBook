@@ -3,7 +3,7 @@ class UserManager:
         """Регистрация через почту или соцсети."""
         pass
 
-    def login(self, email: str, password: str) -> bool:
+    def logрррin(self, email: str, password: str) -> bool:
         """Вход в систему."""
         pass
 
